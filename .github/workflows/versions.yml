@@ -109,7 +109,7 @@ jobs:
           for project in "${random_projects[@]}"; do
             echo "Processing project: $project"
             IFS=':' read -r dir name <<< "$project"
-            date -%s > $dir/update.md
+            date +%s > $dir/update.md
           done
 
           # Commit changes
