@@ -113,6 +113,7 @@ jobs:
           done
 
           # Commit changes
+          git add .
           git commit -am "Update random projects: $joined_projects"
 
           # Join all random items in a string concatenated with comma
