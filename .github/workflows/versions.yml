@@ -3,22 +3,32 @@ name: Update All Project Versions
 on:
   workflow_dispatch:
     inputs:
-      version:
+      workspace_distribution:
         description: "Version bump type"
         required: true
-        default: "main-version"
+        default: "main"
         type: choice
         options:
-          - main-version
-          - main-version-with-pr
-          - random-packages
-          - random-packages-with-pr
+          - main
+          - main-with-pr
+          - random
+          - random-with-pr
+      bumpalicious_ref:
+        description: "Bumpalicious ref"
+        required: false
+        default: "main"
+        type: string
   workflow_call:
     inputs:
-      version:
+      workspace_distribution:
         description: "Version bump type"
         required: true
-        default: "main-version"
+        default: "main"
+        type: string
+      bumpalicious_ref:
+        description: "Bumpalicious ref"
+        required: false
+        default: "main"
         type: string
 
 jobs:
@@ -125,18 +135,18 @@ jobs:
           echo "random_projects=$joined_projects" >> $GITHUB_OUTPUT
 
       - name: Update Repo Version (by Commit)
-        if: ${{ inputs.version == 'main-version' }}
+        if: ${{ inputs.workspace_distribution == 'main' }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        uses: dragoscops/bumpalicious@2_0_node
+        uses: dragoscops/bumpalicious@${{ inputs.bumpalicious_ref }}
         with:
           workspaces: ".:text,${{steps.random3.outputs.random_projects}}"
 
       - name: Update Repo Version (by Pull Request)
-        if: ${{ inputs.version == 'main-version-with-pr' }}
+        if: ${{ inputs.workspace_distribution == 'main-with-pr' }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        uses: dragoscops/bumpalicious@2_0_node
+        uses: dragoscops/bumpalicious@${{ inputs.bumpalicious_ref }}
         with:
           workspaces: ".:text,${{steps.random3.outputs.random_projects}}"
           pr: "true"
