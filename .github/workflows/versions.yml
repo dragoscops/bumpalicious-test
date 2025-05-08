@@ -131,6 +131,7 @@ jobs:
         uses: dragoscops/bumpalicious@v2_0_node
         with:
           workspaces: ".:text,${{steps.random3.outputs.random_projects}}"
+
       - name: Update Repo Version (by Pull Request)
         if: ${{ inputs.version == 'main-version-with-pr' }}
         env:
