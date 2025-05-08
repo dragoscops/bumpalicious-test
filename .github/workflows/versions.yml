@@ -130,7 +130,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         uses: dragoscops/bumpalicious@2_0_node
         with:
-          workspaces: ".:text,${{steps.random3.outputs.random_projects}}"
+          workspaces: ".:text"
 
       - name: Update Repo Version (by Pull Request)
         if: ${{ inputs.workspace_distribution == 'main-with-pr' }}
