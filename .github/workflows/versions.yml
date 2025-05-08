@@ -68,6 +68,7 @@ jobs:
           zig-version: "0.11.0"
 
       - name: Update Random 3 Folders
+        id: random3
         env:
           GITHUB_TOKEN: ${{ secrets.GH_BUMPALICIOUS_TOKEN }}
           GH_TOKEN: ${{ secrets.GH_BUMPALICIOUS_TOKEN }}
@@ -122,3 +123,20 @@ jobs:
           echo "Random projects joined: $joined_projects"
 
           echo "random_projects=$joined_projects" >> $GITHUB_OUTPUT
+
+      - name: Update Repo Version (by Commit)
+        if: ${{ inputs.version == 'main-version' }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: dragoscops/bumpalicious@v2_0_node
+        with:
+          workspaces: ".:text,${{steps.random3.outputs.random_projects}}"
+      - name: Update Repo Version (by Pull Request)
+        if: ${{ inputs.version == 'main-version-with-pr' }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: dragoscops/bumpalicious@v2_0_node
+        with:
+          workspaces: ".:text,${{steps.random3.outputs.random_projects}}"
+          pr: "true"
+          pr_auto_merge: "true"
