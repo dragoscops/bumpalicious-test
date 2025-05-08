@@ -113,7 +113,7 @@ jobs:
           done
 
           # Commit changes
-          git commit -am -m "Update random projects: $joined_projects"
+          git commit -am "Update random projects: $joined_projects"
 
           # Join all random items in a string concatenated with comma
           joined_projects=$(IFS=,; echo "${random_projects[*]}")
