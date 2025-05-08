@@ -13,21 +13,11 @@ on:
           - main-with-pr
           - random
           - random-with-pr
-      bumpalicious_ref:
-        description: "Bumpalicious ref"
-        required: false
-        default: "main"
-        type: string
   workflow_call:
     inputs:
       workspace_distribution:
         description: "Version bump type"
         required: true
-        default: "main"
-        type: string
-      bumpalicious_ref:
-        description: "Bumpalicious ref"
-        required: false
         default: "main"
         type: string
 
@@ -138,7 +128,7 @@ jobs:
         if: ${{ inputs.workspace_distribution == 'main' }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        uses: dragoscops/bumpalicious@${{ inputs.bumpalicious_ref }}
+        uses: dragoscops/bumpalicious@2_0_node
         with:
           workspaces: ".:text,${{steps.random3.outputs.random_projects}}"
 
@@ -146,7 +136,7 @@ jobs:
         if: ${{ inputs.workspace_distribution == 'main-with-pr' }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        uses: dragoscops/bumpalicious@${{ inputs.bumpalicious_ref }}
+        uses: dragoscops/bumpalicious@2_0_node
         with:
           workspaces: ".:text,${{steps.random3.outputs.random_projects}}"
           pr: "true"
