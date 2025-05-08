@@ -1,0 +1,12 @@
+[project]
+name = "python-project-toml"
+version = "1.0.0"
+description = "Test project for Bumpalicious GitHub Action"
+authors = [{ name = "Test Author", email = "test@example.com" }]
+readme = "README.md"
+requires-python = ">=3.7"
+license = { text = "MIT" }
+
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"

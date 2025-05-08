@@ -1,0 +1,9 @@
+{
+  "name": "@example/node-project-jsr",
+  "version": "1.0.0",
+  "description": "Test project for Bumpalicious GitHub Action",
+  "exports": "./src/index.js",
+  "publish": {
+    "include": ["src/**/*.js", "README.md"]
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "deno-project-jsonc",
+  "version": "1.0.0",
+  "description": "Test Deno project with deno.jsonc",
+  /* This is a comment that makes this file a JSONC */
+  "tasks": {
+    "start": "deno run main.ts"
+  }
+}

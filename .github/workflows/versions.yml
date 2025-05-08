@@ -1,0 +1,104 @@
+name: Update All Project Versions
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version bump type"
+        required: true
+        default: "main-version"
+        type: choice
+        options:
+          - main-version
+          - main-version-with-pr
+          - random-packages
+          - random-packages-with-pr
+  workflow_call:
+    inputs:
+      version:
+        description: "Version bump type"
+        required: true
+        default: "main-version"
+        type: string
+
+jobs:
+  update-all-versions:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Install Deno
+      - name: Setup Deno
+        uses: denoland/setup-deno@v1
+        with:
+          deno-version: v1.x
+
+      # Install Go
+      - name: Setup Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: "1.21"
+
+      # Install Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "20"
+
+      # Install Python
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.12"
+
+      # Install Rust
+      - name: Setup Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: stable
+
+      # Install Zig
+      - name: Setup Zig
+        uses: korandoru/setup-zig@v1
+        with:
+          zig-version: "0.11.0"
+
+      - name: Update Random 3 Folders
+        run: |
+          # Create an array to hold all project names
+          projects=()
+
+          # Find all update.md files and extract project names
+          while read -r f; do
+            d=$(dirname "$f")
+            p=$(echo "$d" | sed -e 's/-.*//' | sed -e 's/.\///')
+            projects+=("$p")
+          done < <(find . -name update.md)
+
+          # Print all found projects
+          echo "Found ${#projects[@]} projects:"
+          printf "  - %s\n" "${projects[@]}"
+
+          # 3 random items from all projects array
+          random_projects=()
+
+          if [ ${#projects[@]} -ge 3 ]; then
+            # Shuffle projects array and take first 3
+            random_projects=($(printf "%s\n" "${projects[@]}" | shuf -n 3))
+          else
+            # If fewer than 3 projects, use all of them
+            random_projects=("${projects[@]}")
+          fi
+
+          # Print the selected projects
+          echo "Randomly selected projects:"
+          printf "  - %s\n" "${random_projects[@]}"
+
+          # Process each selected project
+          for project in "${random_projects[@]}"; do
+            echo "Processing project: $project"
+          done
