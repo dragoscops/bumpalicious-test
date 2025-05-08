@@ -128,7 +128,7 @@ jobs:
         if: ${{ inputs.version == 'main-version' }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        uses: dragoscops/bumpalicious@v2_0_node
+        uses: dragoscops/bumpalicious@2_0_node
         with:
           workspaces: ".:text,${{steps.random3.outputs.random_projects}}"
 
@@ -136,7 +136,7 @@ jobs:
         if: ${{ inputs.version == 'main-version-with-pr' }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        uses: dragoscops/bumpalicious@v2_0_node
+        uses: dragoscops/bumpalicious@2_0_node
         with:
           workspaces: ".:text,${{steps.random3.outputs.random_projects}}"
           pr: "true"
