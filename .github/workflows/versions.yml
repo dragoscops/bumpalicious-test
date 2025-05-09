@@ -115,7 +115,7 @@ jobs:
 
           # Commit changes
           git add .
-          git commit -am "Update random projects: $joined_projects"
+          git commit -am "fix: update random projects > $joined_projects"
           git push origin ${{ github.ref }}
 
           # Join all random items in a string concatenated with comma
