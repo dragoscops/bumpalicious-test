@@ -113,14 +113,14 @@ jobs:
             date +%s > $dir/update.md
           done
 
+          # Join all random items in a string concatenated with comma
+          joined_projects=$(IFS=,; echo "${random_projects[*]}")
+          echo "Random projects joined: $joined_projects"
+
           # Commit changes
           git add .
           git commit -am "fix: update random projects > $joined_projects"
           git push origin ${{ github.ref }}
-
-          # Join all random items in a string concatenated with comma
-          joined_projects=$(IFS=,; echo "${random_projects[*]}")
-          echo "Random projects joined: $joined_projects"
 
           echo "random_projects=$joined_projects" >> $GITHUB_OUTPUT
 
