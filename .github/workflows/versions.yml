@@ -83,9 +83,10 @@ jobs:
           # Create an array to hold all project names
           projects=(
             "deno-project-json:deno"
-            "deno-project-jsonc:deno"
+            # "deno-project-jsonc:deno"
             "deno-project-jsr:deno"
-            # "node-project-package:node"
+            "node-project-package:node"
+            "node-project-jsr:node"
             # "python-project:python"
             # "go-project:go"
             # "rust-project:rust"
