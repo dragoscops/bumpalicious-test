@@ -1,5 +1,5 @@
 [project]
-name = "python-project-toml"
+name = "python-toml"
 version = "1.0.0"
 description = "Test project for Bumpalicious GitHub Action"
 authors = [{ name = "Test Author", email = "test@example.com" }]
