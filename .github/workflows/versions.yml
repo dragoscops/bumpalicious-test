@@ -81,15 +81,24 @@ jobs:
           git config user.email "actions@github.com"
 
           # Create an array to hold all project names
-          projects=()
+          projects=(
+            "deno-project-json"
+            "deno-project-jsonc"
+            "deno-project-jsr"
+            # "node-project-package"
+            # "python-project"
+            # "go-project"
+            # "rust-project"
+            # "zig-project"
+          )
 
-          # Find all update.md files and extract project names
-          while read -r f; do
-            d=$(dirname "$f")
-            d=$(basename "$d")
-            p=$(echo "$d" | sed -e 's/-.*//' | sed -e 's|^\./||')
-            projects+=("$d:$p")
-          done < <(find . -name update.md)
+          # # Find all update.md files and extract project names
+          # while read -r f; do
+          #   d=$(dirname "$f")
+          #   d=$(basename "$d")
+          #   p=$(echo "$d" | sed -e 's/-.*//' | sed -e 's|^\./||')
+          #   projects+=("$d:$p")
+          # done < <(find . -name update.md)
 
           # Print all found projects
           echo "Found ${#projects[@]} projects:"
