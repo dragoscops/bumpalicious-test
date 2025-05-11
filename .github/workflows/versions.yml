@@ -67,9 +67,9 @@ jobs:
 
       # # Install Zig
       # - name: Setup Zig
-        uses: korandoru/setup-zig@v1
-        with:
-          zig-version: "0.11.0"
+      # uses: korandoru/setup-zig@v1
+      # with:
+      #   zig-version: "0.11.0"
 
       - name: Update Random 3 Folders
         id: random3
