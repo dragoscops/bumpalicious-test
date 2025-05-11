@@ -1,5 +1,5 @@
 {
-  "name": "deno-project-json",
+  "name": "@example/deno-json",
   "version": "1.0.1",
   "description": "Test Deno project with deno.json",
   "tasks": {
