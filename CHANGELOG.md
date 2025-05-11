@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## <small>1.0.5 (2025-05-11)</small>
+
+* fix: update random projects > ./text-project:text,./deno-project-jsonc:deno,./zig-project:zig ([6a8c129](https://github.com/dragoscops/bumpalicious-test/commit/6a8c129))
+* chore: better logging ([0d98911](https://github.com/dragoscops/bumpalicious-test/commit/0d98911))
+
+
+
 ## <small>1.0.4 (2025-05-11)</small>
 
 * fix: update random projects > ./zig-project:zig,./rust-project:rust,./go-project-go:go ([90c2182](https://github.com/dragoscops/bumpalicious-test/commit/90c2182))
