@@ -108,14 +108,15 @@ jobs:
 
           # 3 random items from all projects array
           random_projects=()
+          random_projects+=("${projects[@]}")
 
-          if [ ${#projects[@]} -ge 3 ]; then
-            # Shuffle projects array and take first 3
-            random_projects=($(printf "%s\n" "${projects[@]}" | shuf -n 3))
-          else
-            # If fewer than 3 projects, use all of them
-            random_projects=("${projects[@]}")
-          fi
+          # if [ ${#projects[@]} -ge 3 ]; then
+          #   # Shuffle projects array and take first 3
+          #   random_projects=($(printf "%s\n" "${projects[@]}" | shuf -n 3))
+          # else
+          #   # If fewer than 3 projects, use all of them
+          #   random_projects=("${projects[@]}")
+          # fi
 
           # Print the selected projects
           echo "Randomly selected projects:"
