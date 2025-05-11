@@ -94,8 +94,9 @@ jobs:
             "python-toml:python"
             "python-setup-cfg:python"
             "python-setup-py:python"
-            # "rust:rust"
-            # "zig:zig"
+            "python-init-py:python"
+            "rust:rust"
+            # "zig-zog:zig"
           )
 
           # # Find all update.md files and extract project names
