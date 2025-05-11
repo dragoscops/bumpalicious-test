@@ -83,7 +83,7 @@ jobs:
           # Create an array to hold all project names
           projects=(
             "deno-json:deno"
-            # "deno-jsonc:deno"
+            "deno-jsonc:deno"
             "deno-jsr:deno"
             "deno-package:deno"
             # "go-mod:go"
