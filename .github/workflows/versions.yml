@@ -87,7 +87,7 @@ jobs:
             "deno-jsr:deno"
             "deno-package:deno"
             "go-mod:go"
-            "go-version:go"
+            # "go-version:go"
             "node-jsr:node"
             "node-package:node"
             # "python:python"
