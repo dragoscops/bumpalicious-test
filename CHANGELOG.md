@@ -5,6 +5,34 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## <small>1.0.8 (2025-05-11)</small>
+
+* fix: update random projects > ./python-project-setup-py:python,./zig-project:zig,./rust-project:rust ([9d1ce1e](https://github.com/dragoscops/bumpalicious-test/commit/9d1ce1e))
+* chore: version bump for workspaces: bumpalicious-test ([ac3c8bb](https://github.com/dragoscops/bumpalicious-test/commit/ac3c8bb))
+
+
+
+## <small>1.0.7 (2025-05-11)</small>
+
+* fix: update random projects > ./deno-project-json:deno,./text-project:text,./node-project-package:no ([eddba61](https://github.com/dragoscops/bumpalicious-test/commit/eddba61))
+* chore: version bump for workspaces: bumpalicious-test ([4c60c36](https://github.com/dragoscops/bumpalicious-test/commit/4c60c36))
+
+
+
+## <small>1.0.6 (2025-05-11)</small>
+
+* fix: update random projects > ./go-project-go:go,./text-project:text,./node-project-jsr:node ([fd6c082](https://github.com/dragoscops/bumpalicious-test/commit/fd6c082))
+* chore: version bump for workspaces: bumpalicious-test ([221e082](https://github.com/dragoscops/bumpalicious-test/commit/221e082))
+
+
+
+## <small>1.0.5 (2025-05-11)</small>
+
+* fix: update random projects > ./text-project:text,./deno-project-jsonc:deno,./zig-project:zig ([6a8c129](https://github.com/dragoscops/bumpalicious-test/commit/6a8c129))
+* chore: better logging ([0d98911](https://github.com/dragoscops/bumpalicious-test/commit/0d98911))
+
+
+
 ## <small>1.0.4 (2025-05-11)</small>
 
 * fix: update random projects > ./zig-project:zig,./rust-project:rust,./go-project-go:go ([90c2182](https://github.com/dragoscops/bumpalicious-test/commit/90c2182))
