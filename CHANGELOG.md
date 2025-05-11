@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## <small>1.0.7 (2025-05-11)</small>
+
+* fix: update random projects > ./deno-project-json:deno,./text-project:text,./node-project-package:no ([eddba61](https://github.com/dragoscops/bumpalicious-test/commit/eddba61))
+* chore: version bump for workspaces: bumpalicious-test ([4c60c36](https://github.com/dragoscops/bumpalicious-test/commit/4c60c36))
+
+
+
 ## <small>1.0.6 (2025-05-11)</small>
 
 * fix: update random projects > ./go-project-go:go,./text-project:text,./node-project-jsr:node ([fd6c082](https://github.com/dragoscops/bumpalicious-test/commit/fd6c082))
