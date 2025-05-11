@@ -1,4 +1,4 @@
-name: Update All Project Versions
+name: Test Updating Version
 
 on:
   workflow_dispatch:
@@ -133,6 +133,24 @@ jobs:
 
       - name: Update Repo Version (by Pull Request)
         if: ${{ inputs.workspace_distribution == 'main-with-pr' }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_BUMPALICIOUS_TOKEN }}
+        uses: dragoscops/bumpalicious@2_0_node
+        with:
+          workspaces: ".:text,${{steps.random3.outputs.random_projects}}"
+          pr: "true"
+          pr_auto_merge: "true"
+
+      - name: Update Workspaces Version (by Commit)
+        if: ${{ inputs.workspace_distribution == 'random' }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_BUMPALICIOUS_TOKEN }}
+        uses: dragoscops/bumpalicious@2_0_node
+        with:
+          workspaces: ".:text"
+
+      - name: Update Workspaces Version (by Pull Request)
+        if: ${{ inputs.workspace_distribution == 'random-with-pr' }}
         env:
           GITHUB_TOKEN: ${{ secrets.GH_BUMPALICIOUS_TOKEN }}
         uses: dragoscops/bumpalicious@2_0_node
