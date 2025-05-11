@@ -84,7 +84,8 @@ jobs:
           # Find all update.md files and extract project names
           while read -r f; do
             d=$(dirname "$f")
-            p=$(echo "$d" | sed -e 's/-.*//' | sed -e 's/.\///')
+            d=$(basename "$f")
+            p=$(echo "$d" | sed -e 's/-.*//' | sed -e 's|^\./||')
             projects+=("$d:$p")
           done < <(find . -name update.md)
 
