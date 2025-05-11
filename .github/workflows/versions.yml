@@ -122,6 +122,7 @@ jobs:
           echo "Random projects joined: $joined_projects"
 
           # Commit changes
+          git status
           git add .
           git commit -am "fix: update random projects > $joined_projects"
           git push origin ${{ github.ref }}
