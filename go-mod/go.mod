@@ -1,4 +1,4 @@
-module github.com/bumpalicious-test/go-go
+module github.com/bumpalicious-test/go-mod
 
 go 1.21
 
