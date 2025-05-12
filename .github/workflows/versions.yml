@@ -90,7 +90,7 @@ jobs:
             "go-version:go"
             "node-jsr:node"
             "node-package:node"
-            # "python-poetry:python"
+            "python-poetry:python"
             "python-toml:python"
             "python-setup-cfg:python"
             "python-setup-py:python"
