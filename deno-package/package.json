@@ -1,6 +1,6 @@
 {
   "name": "@example/deno-package",
-  "version": "1.0.17",
+  "version": "1.0.18",
   "description": "Test project for Bumpalicious GitHub Action",
   "main": "src/index.js",
   "scripts": {
