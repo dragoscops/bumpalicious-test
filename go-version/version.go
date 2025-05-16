@@ -1,6 +1,6 @@
 package version
 
-const Version = "1.0.1"
+constVersion = "1.0.2"
 
 func GetVersion() string {
   return Version

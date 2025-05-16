@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="python-setup-py",
-    version="1.0.4",
+    version = "1.0.5",
     packages=find_packages(),
     description="Test project for Bumpalicious GitHub Action",
     author="Test Author",
