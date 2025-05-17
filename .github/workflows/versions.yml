@@ -82,21 +82,21 @@ jobs:
 
           # Create an array to hold all project names
           projects=(
-            "deno-json:deno"
-            "deno-jsonc:deno"
-            "deno-jsr:deno"
-            "deno-package:deno"
+            # "deno-json:deno"
+            # "deno-jsonc:deno"
+            # "deno-jsr:deno"
+            # "deno-package:deno"
             # "go-mod:go"
-            "go-version:go"
-            "node-jsr:node"
-            "node-package:node"
-            "python-poetry:python"
-            "python-toml:python"
-            "python-setup-cfg:python"
-            "python-setup-py:python"
-            "python-init-py:python"
-            "rust:rust"
-            # "zig-zon:zig"
+            # "go-version:go"
+            # "node-jsr:node"
+            # "node-package:node"
+            # "python-poetry:python"
+            # "python-toml:python"
+            # "python-setup-cfg:python"
+            # "python-setup-py:python"
+            # "python-init-py:python"
+            # "rust:rust"
+            "zig-zon:zig"
           )
 
           # # Find all update.md files and extract project names
