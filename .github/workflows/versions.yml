@@ -95,8 +95,8 @@ jobs:
             "python-setup-cfg:python"
             "python-setup-py:python"
             "python-init-py:python"
-            # "rust:rust"
-            # "zig-zon:zig"
+            "rust:rust"
+            "zig-zon:zig"
           )
 
           # # Find all update.md files and extract project names
