@@ -1,6 +1,6 @@
 {
   "name": "@example/node-package",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "Test project for Bumpalicious GitHub Action",
   "main": "src/index.js",
   "scripts": {
