@@ -1,6 +1,6 @@
 {
   "name": "@example/deno-jsr",
-  "version": "1.0.24",
+  "version": "1.0.25",
   "description": "Test Deno project with jsr.json",
   "exports": "./main.ts"
 }
