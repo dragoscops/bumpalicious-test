@@ -144,7 +144,10 @@ jobs:
           git commit -am "fix: update random projects > $joined_projects"
           git push origin ${{ github.ref }}
 
+          git status
+
           echo "random_projects=$joined_projects" >> $GITHUB_OUTPUT
+          echo "random_projects=$joined_projects"
 
       - name: Update Repo Version (by Commit)
         if: ${{ inputs.workspace_distribution == 'main' }}
