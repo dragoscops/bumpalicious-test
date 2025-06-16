@@ -1,6 +1,6 @@
 {
   "name": "@example/deno-jsonc",
-  "version": "1.0.32",
+  "version": "1.0.33",
   "description": "Test Deno project with deno.jsonc",
   "tasks": {
     "start": "deno run main.ts"

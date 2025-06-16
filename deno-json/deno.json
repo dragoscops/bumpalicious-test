@@ -1,6 +1,6 @@
 {
   "name": "@example/deno-json",
-  "version": "1.0.36",
+  "version": "1.0.37",
   "description": "Test Deno project with deno.json",
   "tasks": {
     "start": "deno run main.ts"
