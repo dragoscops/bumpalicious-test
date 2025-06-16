@@ -1,6 +1,6 @@
 {
   "name": "@example/node-jsr",
-  "version": "1.0.19",
+  "version": "1.0.20",
   "description": "Test project for Bumpalicious GitHub Action",
   "exports": "./src/index.js",
   "publish": {

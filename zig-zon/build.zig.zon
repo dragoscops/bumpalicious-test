@@ -1,6 +1,6 @@
 .{
     .name = "zig-project-zon",
-    .version = "1.0.8",
+    .version = "1.0.9",
     .dependencies = .{
         // Example dependencies would be here
     },
