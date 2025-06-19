@@ -1,8 +1,0 @@
-{
-  "name": "@example/deno-jsonc",
-  "version": "1.0.35",
-  "description": "Test Deno project with deno.jsonc",
-  "tasks": {
-    "start": "deno run main.ts"
-  }
-}

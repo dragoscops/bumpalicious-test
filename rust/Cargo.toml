@@ -1,8 +1,0 @@
-dependencies = { }
-
-[package]
-name = "rust-project"
-version = "1.0.15"
-edition = "2021"
-description = "Test project for Bumpalicious GitHub Action"
-license = "MIT"
