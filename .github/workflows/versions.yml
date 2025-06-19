@@ -19,6 +19,9 @@ jobs:
 
       - name: Provision Code
         run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
           echo "This is a test project" > README.md
           echo '{ "version": "0.0.1", "name": "single-project" }' > package.json
           mkdir workspaces1
@@ -27,9 +30,6 @@ jobs:
           mkdir workspaces2
           echo "This is a workspaces project 2" > workspaces2/README.md
           echo '{ "version": "0.0.31", "name": "@main-workspace/workspace2" }' > workspaces2/package.json
-
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
 
           git add -A
           git diff-index --quiet HEAD || git commit -m "chore: auto-update [skip ci]"
@@ -53,15 +53,17 @@ jobs:
       - name: Clean Repo
         if: ${{ always() }}
         run: |
-          rm -rf workspaces* package.json README.md
-
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          rm -rf workspaces* package.json README.md
 
           git add -A
           git diff-index --quiet HEAD || git commit -m "chore: auto-update [skip ci]"
 
           git push
+
+          git pull
 
           git push --delete origin v0.0.1
 
