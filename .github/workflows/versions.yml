@@ -13,7 +13,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.GITHUB_TOKEN_PUSH }}
+          token: ${{ secrets.GH_TOKEN_PUSH }}
+          # - bumpalicious-test-github-push — repo
           fetch-depth: 0 # Required if you’ll push to an existing branch
 
       - name: Provision Code
@@ -46,7 +47,7 @@ jobs:
         if: ${{ always() }}
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.GITHUB_TOKEN_PUSH }}
+          token: ${{ secrets.GH_TOKEN_PUSH }}
           fetch-depth: 0 # Required if you’ll push to an existing branch
 
       - name: Clean Repo
