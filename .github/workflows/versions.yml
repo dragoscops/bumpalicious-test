@@ -1,10 +1,20 @@
 name: Test Updating Version
 
-# run-name: Test Updating Version ${{ inputs.workspace_distribution }}
+run-name: Test Updating Version ${{ inputs.workspace_distribution }}
 
 on:
-  workflow_dispatch: {}
-  workflow_call: {}
+  workflow_dispatch:
+    inputs:
+      pr:
+        description: Use PR to push
+        type: string
+        default: "false"
+  workflow_call:
+    inputs:
+      pr:
+        description: Use PR to push
+        type: string
+        default: "false"
 
 jobs:
   prerequisites:
@@ -42,59 +52,33 @@ jobs:
           git tag v0.0.1
           git push origin v0.0.1
 
-  cleanup:
-    if: ${{ always() }}
+  test-bumpalicious:
     runs-on: ubuntu-latest
     needs:
       - prerequisites
     steps:
-      - name: Checkout repo
-        if: ${{ always() }}
+      - name: Github App Token
+        id: app-token-push
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ vars.GH_APP_PUSH_ID }}
+          private-key: ${{ secrets.GH_APP_PUSH_KEY }}
+
+      - name: Compute Push Token
+        id: gh-token-push
+        run: |
+          if [ "${{ inputs.pr }}" == "true" ]; then
+            echo token=${{ steps.app-token-push.outputs.token }} >> $GITHUB_OUTPUT
+          else
+            echo token=${{ secrets.GH_TOKEN_PUSH }} >> $GITHUB_OUTPUT
+          fi
+
+      - name: Checkout code
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.GH_TOKEN_PUSH }}
-          fetch-depth: 0 # Required if you’ll push to an existing branch
+          token: ${{ steps.gh-token-push.outputs.token }}
+          fetch-depth: 0
 
-      - name: Clean Repo
-        if: ${{ always() }}
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-
-          set -ex
-
-          git pull
-
-          rm -rf workspaces* package.json README.md
-
-          git add -A
-          git diff-index --quiet HEAD || git commit -m "chore: auto-update [skip ci]"
-
-          git push
-
-          git pull
-
-          git push --delete origin v0.0.1
-
-  # test-update-version::
-  #   runs-on: ubuntu-latest
-  #   strategy:
-  #     matrix:
-  #       workspace_distribution:
-  #         - single
-  #         - single-with-pr
-  #         - workspaces
-  #         - workspaces-with-pr
-  #       token_type:
-  #         - tap
-  #         - app
-  #
-  #   steps:
-  #     - name: Checkout code
-  #       uses: actions/checkout@v4
-  #       with:
-  #         fetch-depth: 0
-  #
   #     - name: Create Single Project Repo
   #       if: ${{ contains(inputs.workspace_distribution, 'single') }}
   #       run: |
@@ -146,3 +130,38 @@ jobs:
   #     workspaces: ".:text,${{steps.workspaces3.outputs.workspaces_projects}}"
   #     pr: "true"
   #     pr_auto_merge: "true"
+
+  cleanup:
+    if: ${{ always() }}
+    runs-on: ubuntu-latest
+    needs:
+      - prerequisites
+      - test-bumpalicious
+    steps:
+      - name: Checkout repo
+        if: ${{ always() }}
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GH_TOKEN_PUSH }}
+          fetch-depth: 0 # Required if you’ll push to an existing branch
+
+      - name: Clean Repo
+        if: ${{ always() }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          set -ex
+
+          git pull
+
+          rm -rf workspaces* package.json README.md
+
+          git add -A
+          git diff-index --quiet HEAD || git commit -m "chore: auto-update [skip ci]"
+
+          git push
+
+          git pull
+
+          git push --delete origin v0.0.1
