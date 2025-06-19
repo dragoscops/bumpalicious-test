@@ -1,27 +1,10 @@
 name: Test Updating Version
 
-run-name: Test Updating Version ${{ inputs.workspace_distribution }}
+# run-name: Test Updating Version ${{ inputs.workspace_distribution }}
 
 on:
-  workflow_dispatch:
-    inputs:
-      workspace_distribution:
-        description: "Version bump type"
-        required: true
-        default: "single"
-        type: choice
-        options:
-          - single
-          - single-with-pr
-          - workspaces
-          - workspaces-with-pr
-  workflow_call:
-    inputs:
-      workspace_distribution:
-        description: "Version bump type"
-        required: true
-        default: "single"
-        type: string
+  workflow_dispatch: {}
+  workflow_call: {}
 
 jobs:
   prerequisites:
@@ -30,7 +13,7 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN_PUSH }}
           fetch-depth: 0 # Required if you’ll push to an existing branch
 
       - name: Provision Code
@@ -63,7 +46,7 @@ jobs:
         if: ${{ always() }}
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN_PUSH }}
           fetch-depth: 0 # Required if you’ll push to an existing branch
 
       - name: Clean Repo
