@@ -1,2 +1,1 @@
-# bumpalicious-test
-Mock Repository to test Bumpalicious Github Action
+This is a test project
