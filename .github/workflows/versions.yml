@@ -90,12 +90,17 @@ jobs:
 
       - name: Providion Git Version
         run: |
+          set -ex
+
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
           git pull --ff-only
           date > README.md
           date > workspaces1/README.md
+
+          git status
+          git diff
 
           git add -A
           git commit -am "chore: update"
