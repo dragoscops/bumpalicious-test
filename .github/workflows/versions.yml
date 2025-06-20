@@ -94,21 +94,28 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
           git pull --ff-only
-          echo "" > package.json
+          date > README.md
+          date > workspaces1/README.md
 
           git add -A
           git commit -am "chore: update"
           git push
 
-      # - name: Update Workspaces Version (by Pull Request)
-      #   if: ${{ inputs.workspace_distribution == 'workspaces-with-pr' }}
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GH_BUMPALICIOUS_TOKEN }}
-      #   uses: dragoscops/bumpalicious@2_0_node
-      #   with:
-      #     workspaces: ".:text,${{steps.workspaces3.outputs.workspaces_projects}}"
-      #     pr: "true"
-      #     pr_auto_merge: "true"
+      - name: Update Workspaces Version
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_BUMPALICIOUS_TOKEN }}
+        uses: dragoscops/bumpalicious@v2
+        with:
+          workspaces: .:node
+          pr: ${{ inputs.pr }}
+          pr_auto_merge: true
+
+      - name: Validate Version Bump
+        run: |
+          git fetch
+          git pull
+
+          [ "${{ inputs.pr }}" == "false" ] && git tab -l | grep v0.0.2
 
   cleanup:
     if: ${{ always() }}
@@ -144,4 +151,4 @@ jobs:
 
           git pull
 
-          git push --delete origin v0.0.1
+          git tag -l | xargs git push --delete origin
