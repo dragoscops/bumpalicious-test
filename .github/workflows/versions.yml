@@ -142,6 +142,7 @@ jobs:
           set -ex
 
           git pull
+          git tag -l
 
           rm -rf workspaces* package.json README.md
 
