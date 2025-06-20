@@ -85,7 +85,7 @@ jobs:
         pr:
           - false
           - true
-      max-parallel: 0
+      max-parallel: 1
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -112,7 +112,7 @@ jobs:
           git pull --ff-only
           git push
 
-      - name: Update Workspaces Version
+      - name: Update Version
         env:
           GITHUB_TOKEN: ${{ secrets.GH_BUMPALICIOUS_TOKEN }}
         uses: dragoscops/bumpalicious@v2
