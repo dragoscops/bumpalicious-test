@@ -18,8 +18,6 @@ on:
 
 jobs:
   prereqs:
-    outputs:
-      token: ${{ steps.gh-token-push.outputs.token }}
     runs-on: ubuntu-latest
     steps:
       - name: Github App Token
@@ -83,6 +81,8 @@ jobs:
 
           git tag v0.0.1
           git push origin v0.0.1
+    outputs:
+      token: ${{ steps.gh-token-push.outputs.token }}
 
   bumpalicious:
     runs-on: ubuntu-latest
