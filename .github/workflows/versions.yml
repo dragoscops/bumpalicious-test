@@ -20,7 +20,7 @@ jobs:
   prereqs:
     runs-on: ubuntu-latest
     outputs:
-      token: ${{ steps.gh-token-push.outputs.token }}
+      token: ${{ steps.app-token-push.outputs.token }}
       debug: ${{ steps.gh-token-push.outputs.debug }}
     steps:
       - name: Github App Token
@@ -36,7 +36,6 @@ jobs:
         run: |
           if [ "${{ inputs.pr }}" == "true" ]; then
             echo "using gihub app token..."
-            echo "token=${{ steps.app-token-push.outputs.token }}" >> $GITHUB_OUTPUT
             echo "debug=1" >> $GITHUB_OUTPUT
           else
             echo "using pat..."
