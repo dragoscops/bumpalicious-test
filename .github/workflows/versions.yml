@@ -21,6 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       token: ${{ steps.gh-token-push.outputs.token }}
+      debug: ${{ steps.gh-token-push.outputs.debug }}
     steps:
       - name: Github App Token
         # if: ${{ inputs.pr == "true" || inputs.pr == true }}
@@ -35,10 +36,12 @@ jobs:
         run: |
           if [ "${{ inputs.pr }}" == "true" ]; then
             echo "using gihub app token..."
-            echo token=${{ steps.app-token-push.outputs.token }} >> $GITHUB_OUTPUT
+            echo "token=${{ steps.app-token-push.outputs.token }}" >> $GITHUB_OUTPUT
+            echo "debug=1" >> $GITHUB_OUTPUT
           else
             echo "using pat..."
-            echo token=${{ secrets.GH_TOKEN_PUSH }} >> $GITHUB_OUTPUT
+            echo "token=${{ secrets.GH_TOKEN_PUSH }}" >> $GITHUB_OUTPUT
+            echo "debug=2" >> $GITHUB_OUTPUT
           fi
 
       # PAT Settings:
@@ -93,6 +96,7 @@ jobs:
       - name: Debug
         run: |
           echo "token=${{ needs.prereqs.outputs.token }}"
+          echo "debug=${{ needs.prereqs.outputs.debug }}"
 
       - name: Checkout code
         uses: actions/checkout@v4
