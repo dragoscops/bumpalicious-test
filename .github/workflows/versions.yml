@@ -30,18 +30,6 @@ jobs:
           app-id: ${{ vars.GH_APP_PUSH_ID }}
           private-key: ${{ secrets.GH_APP_PUSH_KEY }}
 
-      # - name: Compute Push Token
-      #   id: gh-token-push
-      #   run: |
-      #     if [ "${{ inputs.pr }}" == "true" ]; then
-      #       echo "using gihub app token..."
-      #       echo "debug=1" >> $GITHUB_OUTPUT
-      #     else
-      #       echo "using pat..."
-      #       echo "token=${{ secrets.GH_TOKEN_PUSH }}" >> $GITHUB_OUTPUT
-      #       echo "debug=2" >> $GITHUB_OUTPUT
-      #     fi
-
       # PAT Settings:
       # - repo (full)
       # Github App:
@@ -62,30 +50,33 @@ jobs:
       #     echo "Setting authenticated remote URL..."
       #     git remote set-url origin "$REMOTE_REPO"
 
-      # - name: Provision Code
-      #   run: |
-      #     git config user.name "github-actions[bot]"
-      #     git config user.email "github-actions[bot]@users.noreply.github.com"
-      #
-      #     set -ex
-      #
-      #     git pull
-      #
-      #     echo "This is a test project" > README.md
-      #     echo '{ "version": "0.0.1", "name": "single-project" }' > package.json
-      #     mkdir workspaces1
-      #     echo "This is a workspaces project 1" > workspaces1/README.md
-      #     echo '{ "version": "0.0.5", "name": "@main-workspace/workspace1" }' > workspaces1/package.json
-      #     mkdir workspaces2
-      #     echo "This is a workspaces project 2" > workspaces2/README.md
-      #     echo '{ "version": "0.0.31", "name": "@main-workspace/workspace2" }' > workspaces2/package.json
-      #
-      #     git add -A
-      #     git diff-index --quiet HEAD || git commit -m "chore: auto-update [skip ci]"
-      #     git push
-      #
-      #     git tag v0.0.1
-      #     git push origin v0.0.1
+      - name: Provision Code
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          set -ex
+
+          git pull
+
+          echo "This is a test project" > README.md
+          echo '{ "version": "0.0.1", "name": "single-project" }' > package.json
+          mkdir workspaces1
+          echo "This is a workspaces project 1" > workspaces1/README.md
+          echo '{ "version": "0.0.5", "name": "@main-workspace/workspace1" }' > workspaces1/package.json
+          mkdir workspaces2
+          echo "This is a workspaces project 2" > workspaces2/README.md
+          echo '{ "version": "0.0.31", "name": "@main-workspace/workspace2" }' > workspaces2/package.json
+
+          git add -A
+          git diff-index --quiet HEAD || git commit -m "chore: auto-update [skip ci]"
+          git push
+
+          git tag v0.0.1
+          git push origin v0.0.1
+
+          git pull
+          git tag -l
 
   bumpalicious:
     runs-on: ubuntu-latest
