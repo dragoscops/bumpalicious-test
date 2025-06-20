@@ -1,1 +1,4 @@
-{ "version": "0.0.1", "name": "single-project" }
+{
+  "version": "0.0.2",
+  "name": "single-project"
+}
