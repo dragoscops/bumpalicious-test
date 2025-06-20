@@ -126,7 +126,6 @@ jobs:
           set -ex
 
           git fetch
-          git pull
 
           git tag -l
           git branch -a
