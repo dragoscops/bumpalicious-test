@@ -23,7 +23,6 @@ jobs:
       token: ${{ steps.app-token-push.outputs.token }}
     steps:
       - name: Github App Token
-        # if: ${{ inputs.pr == "true" || inputs.pr == true }}
         id: app-token-push
         uses: actions/create-github-app-token@v2
         with:
@@ -81,6 +80,12 @@ jobs:
   bumpalicious:
     runs-on: ubuntu-latest
     needs: prereqs
+    strategy:
+      matrix:
+        pr:
+          - true
+          - false
+      max-parallel: 1
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
