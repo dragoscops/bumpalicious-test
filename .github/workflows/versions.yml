@@ -49,15 +49,15 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
-          token: ${{ steps.gh-token-push.output.token }}
+          token: ${{ steps.gh-token-push.outputs.token }}
           fetch-depth: 0 # Required if you’ll push to an existing branch
 
-      - name: Reconfigure Remote
-        shell: bash
-        run: |
-          REMOTE_REPO="https://x-access-token:${{ inputs.token }}@github.com/${{ github.repository }}.git"
-          echo "Setting authenticated remote URL..."
-          git remote set-url origin "$REMOTE_REPO"
+      # - name: Reconfigure Remote
+      #   shell: bash
+      #   run: |
+      #     REMOTE_REPO="https://x-access-token:${{ inputs.token }}@github.com/${{ github.repository }}.git"
+      #     echo "Setting authenticated remote URL..."
+      #     git remote set-url origin "$REMOTE_REPO"
 
       - name: Provision Code
         run: |
