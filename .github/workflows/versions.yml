@@ -23,6 +23,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Github App Token
+        if: ${{ inputs.pr == "true" }}
         id: app-token-push
         uses: actions/create-github-app-token@v2
         with:
