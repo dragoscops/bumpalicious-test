@@ -17,15 +17,46 @@ on:
         default: "false"
 
 jobs:
-  prerequisites:
+  prereqs:
+    outputs:
+      token: ${{ steps.gh-token-push.outputs.token }}
     runs-on: ubuntu-latest
     steps:
+      - name: Github App Token
+        id: app-token-push
+        uses: actions/create-github-app-token@v2
+        with:
+          app-id: ${{ vars.GH_APP_PUSH_ID }}
+          private-key: ${{ secrets.GH_APP_PUSH_KEY }}
+
+      - name: Compute Push Token
+        id: gh-token-push
+        run: |
+          if [ "${{ inputs.pr }}" == "true" ]; then
+            echo token=${{ steps.app-token-push.outputs.token }} >> $GITHUB_OUTPUT
+          else
+            echo token=${{ secrets.GH_TOKEN_PUSH }} >> $GITHUB_OUTPUT
+          fi
+
+      # PAT Settings:
+      # - repo (full)
+      # Github App:
+      # - Content: read & write
+      # - Pull Requests: read & write
+      # - Administration: read
+
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.GH_TOKEN_PUSH }}
-          # - bumpalicious-test-github-push — repo
+          token: ${{ steps.gh-token-push.output.token }}
           fetch-depth: 0 # Required if you’ll push to an existing branch
+
+      - name: Reconfigure Remote
+        shell: bash
+        run: |
+          REMOTE_REPO="https://x-access-token:${{ inputs.token }}@github.com/${{ github.repository }}.git"
+          echo "Setting authenticated remote URL..."
+          git remote set-url origin "$REMOTE_REPO"
 
       - name: Provision Code
         run: |
@@ -52,97 +83,51 @@ jobs:
           git tag v0.0.1
           git push origin v0.0.1
 
-  test-bumpalicious:
+  bumpalicious:
     runs-on: ubuntu-latest
     needs:
-      - prerequisites
+      - prereqs
     steps:
-      # - name: Github App Token
-      #   id: app-token-push
-      #   uses: actions/create-github-app-token@v1
-      #   with:
-      #     app-id: ${{ vars.GH_APP_PUSH_ID }}
-      #     private-key: ${{ secrets.GH_APP_PUSH_KEY }}
-
-      - name: Compute Push Token
-        id: gh-token-push
-        run: |
-          if [ "${{ inputs.pr }}" == "true" ]; then
-            echo token=${{ steps.app-token-push.outputs.token }} >> $GITHUB_OUTPUT
-          else
-            echo token=${{ secrets.GH_TOKEN_PUSH }} >> $GITHUB_OUTPUT
-          fi
-
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          token: ${{ steps.gh-token-push.outputs.token }}
+          token: ${{ needs.prereqs.outputs.token }}
           fetch-depth: 0
 
-  #     - name: Create Single Project Repo
-  #       if: ${{ contains(inputs.workspace_distribution, 'single') }}
-  #       run: |
-  #         echo "This is a test project" > README.md
-  #         echo "This is a test project" > index.js
-  #         echo '{ "version": "0.0.1", "name": "single-project" }' > package.json
-  #
+      # - name: Providion Git Version
+      #   run: |
+      #     git config user.name "github-actions[bot]"
+      #     git config user.email "github-actions[bot]@users.noreply.github.com"
+      #
+      #     git pull --ff-only
+      #     echo "" > package.json
+      #
+      #     git add -A
+      #     git commit -am "chore: update"
+      #     git push
 
-  #
-  #     - name: Providion Git Version
-  #       run: |
-  #         git config --global user.name "git.user[bot]"
-  #         git config --global user.email "git.user[bot]@github.com"
-  #
-  #         # TODO: remove all existing tags from the repo
-
-  # - name: Update Repo Version (by Commit)
-  #   if: ${{ inputs.workspace_distribution == 'single' }}
-  #   env:
-  #     GITHUB_TOKEN: ${{ secrets.GH_BUMPALICIOUS_TOKEN }}
-  #   uses: dragoscops/bumpalicious@2_0_node
-  #   with:
-  #     workspaces: ".:text"
-  #
-  # - name: Update Repo Version (by Pull Request)
-  #   if: ${{ inputs.workspace_distribution == 'single-with-pr' }}
-  #   env:
-  #     GITHUB_TOKEN: ${{ secrets.GH_BUMPALICIOUS_TOKEN }}
-  #   uses: dragoscops/bumpalicious@2_0_node
-  #   with:
-  #     workspaces: ".:text"
-  #     pr: "true"
-  #     pr_auto_merge: "true"
-  #
-  # - name: Update Workspaces Version (by Commit)
-  #   if: ${{ inputs.workspace_distribution == 'workspaces' }}
-  #   env:
-  #     GITHUB_TOKEN: ${{ secrets.GH_BUMPALICIOUS_TOKEN }}
-  #   uses: dragoscops/bumpalicious@2_0_node
-  #   with:
-  #     workspaces: ".:text,${{steps.workspaces3.outputs.workspaces_projects}}"
-  #
-  # - name: Update Workspaces Version (by Pull Request)
-  #   if: ${{ inputs.workspace_distribution == 'workspaces-with-pr' }}
-  #   env:
-  #     GITHUB_TOKEN: ${{ secrets.GH_BUMPALICIOUS_TOKEN }}
-  #   uses: dragoscops/bumpalicious@2_0_node
-  #   with:
-  #     workspaces: ".:text,${{steps.workspaces3.outputs.workspaces_projects}}"
-  #     pr: "true"
-  #     pr_auto_merge: "true"
+      # - name: Update Workspaces Version (by Pull Request)
+      #   if: ${{ inputs.workspace_distribution == 'workspaces-with-pr' }}
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GH_BUMPALICIOUS_TOKEN }}
+      #   uses: dragoscops/bumpalicious@2_0_node
+      #   with:
+      #     workspaces: ".:text,${{steps.workspaces3.outputs.workspaces_projects}}"
+      #     pr: "true"
+      #     pr_auto_merge: "true"
 
   cleanup:
     if: ${{ always() }}
     runs-on: ubuntu-latest
     needs:
-      - prerequisites
-      - test-bumpalicious
+      - prereqs
+      - bumpalicious
     steps:
       - name: Checkout repo
         if: ${{ always() }}
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.GH_TOKEN_PUSH }}
+          token: ${{ needs.prereqs.outputs.token }}
           fetch-depth: 0 # Required if you’ll push to an existing branch
 
       - name: Clean Repo
