@@ -20,7 +20,7 @@ jobs:
   prereqs:
     runs-on: ubuntu-latest
     outputs:
-      token: ${{ steps.gh-token-push.outputs.token }}
+      gh_token: ${{ steps.gh-token-push.outputs.token }}
     steps:
       - name: Github App Token
         # if: ${{ inputs.pr == "true" || inputs.pr == true }}
@@ -93,7 +93,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          token: ${{ needs.prereqs.outputs.token }}
+          token: ${{ needs.prereqs.outputs.gh_token }}
           fetch-depth: 0
 
       # - name: Providion Git Version
