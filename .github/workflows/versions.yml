@@ -117,7 +117,7 @@ jobs:
         uses: dragoscops/bumpalicious@v2
         with:
           workspaces: .:node
-          pr: ${{ inputs.pr }}
+          pr: ${{ matrix.pr }}
           pr_auto_merge: true
 
       - name: Validate Version Bump
