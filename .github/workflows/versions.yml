@@ -103,7 +103,7 @@ jobs:
           git diff
 
           git add -A
-          git commit -am "chore: update"
+          git commit -am "fix: patch commit test"
           git push
 
       - name: Update Workspaces Version
