@@ -126,6 +126,7 @@ jobs:
           git pull
 
           [ "${{ matrix.pr }}" == "false" ] && git tag -l | grep v0.0.2
+          # [ "${{ matrix.pr }}" == "true" ] && git branch | grep version_bump_0.0.2
 
   cleanup:
     if: ${{ always() }}
