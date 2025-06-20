@@ -130,8 +130,8 @@ jobs:
           git tag -l
           git branch -a
 
-          [ "${{ matrix.pr }}" == "false" ] && git tag -l | grep v0.0.2
-          # [ "${{ matrix.pr }}" == "true" ] && git branch -a | grep version_bump_v0.0.2
+          if [ "${{ matrix.pr }}" == "false" ]; then git tag -l | grep v0.0.2; fi
+          if [ "${{ matrix.pr }}" == "true" ]; then git branch -a | grep version_bump_v0.0.3; fi
 
   cleanup:
     if: ${{ always() }}
