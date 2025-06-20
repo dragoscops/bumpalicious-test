@@ -115,7 +115,7 @@ jobs:
           git fetch
           git pull
 
-          [ "${{ inputs.pr }}" == "false" ] && git tab -l | grep v0.0.2
+          [ "${{ inputs.pr }}" == "false" ] && git tag -l | grep v0.0.2
 
   cleanup:
     if: ${{ always() }}
