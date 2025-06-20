@@ -21,7 +21,6 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       token: ${{ steps.app-token-push.outputs.token }}
-      debug: ${{ steps.gh-token-push.outputs.debug }}
     steps:
       - name: Github App Token
         # if: ${{ inputs.pr == "true" || inputs.pr == true }}
@@ -53,7 +52,7 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
-          token: ${{ steps.gh-token-push.outputs.token }}
+          token: ${{ steps.app-token-push.outputs.token || secrets.GH_TOKEN_PUSH }}
           fetch-depth: 0 # Required if you’ll push to an existing branch
 
       # - name: Reconfigure Remote
