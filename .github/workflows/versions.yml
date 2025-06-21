@@ -17,10 +17,14 @@ on:
         default: "false"
 
 jobs:
-  prereqs:
+  test:
     runs-on: ubuntu-latest
-    outputs:
-      token: ${{ steps.app-token-push.outputs.token }}
+    strategy:
+      matrix:
+        pr:
+          - false
+          - true
+      max-parallel: 1
     steps:
       - name: Github App Token
         id: app-token-push
@@ -77,22 +81,6 @@ jobs:
           git pull
           git tag -l
 
-  bumpalicious:
-    runs-on: ubuntu-latest
-    needs: prereqs
-    strategy:
-      matrix:
-        pr:
-          - false
-          - true
-      max-parallel: 1
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          token: ${{ needs.prereqs.outputs.token || secrets.GH_TOKEN_PUSH }}
-          fetch-depth: 0
-
       - name: Providion Git Version
         run: |
           set -ex
@@ -130,22 +118,7 @@ jobs:
           git tag -l
           git branch -a
 
-          if [ "${{ matrix.pr }}" == "false" ]; then git tag -l | grep v0.0.2; fi
-          if [ "${{ matrix.pr }}" == "true" ]; then git branch -a | grep version_bump_v0.0.3; fi
-
-  cleanup:
-    if: ${{ always() }}
-    runs-on: ubuntu-latest
-    needs:
-      - prereqs
-      - bumpalicious
-    steps:
-      - name: Checkout repo
-        if: ${{ always() }}
-        uses: actions/checkout@v4
-        with:
-          token: ${{ needs.prereqs.outputs.token || secrets.GH_TOKEN_PUSH }}
-          fetch-depth: 0 # Required if you’ll push to an existing branch
+          git tag -l | grep v0.0.2
 
       - name: Clean Repo
         if: ${{ always() }}
