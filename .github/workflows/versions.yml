@@ -54,10 +54,10 @@ jobs:
 
           echo "This is a test project" > README.md
           echo '{ "version": "0.0.1", "name": "single-project" }' > package.json
-          mkdir workspaces1
+          mkdir -p workspaces1
           echo "This is a workspaces project 1" > workspaces1/README.md
           echo '{ "version": "0.0.5", "name": "@main-workspace/workspace1" }' > workspaces1/package.json
-          mkdir workspaces2
+          mkdir -p workspaces2
           echo "This is a workspaces project 2" > workspaces2/README.md
           echo '{ "version": "0.0.31", "name": "@main-workspace/workspace2" }' > workspaces2/package.json
 
