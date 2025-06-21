@@ -3,18 +3,8 @@ name: Test Updating Version
 run-name: Test Updating Version ${{ inputs.workspace_distribution }}
 
 on:
-  workflow_dispatch:
-    inputs:
-      pr:
-        description: Use PR to push
-        type: string
-        default: "false"
-  workflow_call:
-    inputs:
-      pr:
-        description: Use PR to push
-        type: string
-        default: "false"
+  workflow_dispatch: {}
+  workflow_call: {}
 
 jobs:
   test:
@@ -103,7 +93,7 @@ jobs:
       - name: Update Version
         env:
           GITHUB_TOKEN: ${{ secrets.GH_BUMPALICIOUS_TOKEN }}
-        uses: dragoscops/bumpalicious@v2
+        uses: dragoscops/bumpalicious@prepare_release
         with:
           workspaces: .:node
           pr: ${{ matrix.pr }}
