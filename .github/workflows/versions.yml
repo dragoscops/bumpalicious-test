@@ -50,7 +50,7 @@ jobs:
         if: ${{ matrix.co_with_token == false }}
         shell: bash
         run: |
-          REMOTE_REPO="https://x-access-token:${{ steps.app-token-push.outputs.token || secrets.GH_TOKEN_PUSH }}@github.com/${{ github.repository }}.git"
+          # REMOTE_REPO="https://x-access-token:${{ steps.app-token-push.outputs.token || secrets.GH_TOKEN_PUSH }}@github.com/${{ github.repository }}.git"
           REMOTE_REPO="https://${{ steps.app-token-push.outputs.token || secrets.GH_TOKEN_PUSH }}@github.com/${{ github.repository }}.git"
           echo "Setting authenticated remote URL..."
           git remote set-url origin "$REMOTE_REPO"
@@ -71,7 +71,10 @@ jobs:
 
           git add -A
           git diff-index --quiet HEAD || git commit -m "chore: auto-update [skip ci]"
-          git push origin ${{ github.ref_name }}
+          # git push origin ${{ github.ref_name }}
+
+          REMOTE_REPO="https://${{ steps.app-token-push.outputs.token || secrets.GH_TOKEN_PUSH }}@github.com/${{ github.repository }}.git"
+          git push $REMOTE_REPO main:main
 
           tags=$(git tag -l 'v*')
           if [ -n "$tags" ]; then 
