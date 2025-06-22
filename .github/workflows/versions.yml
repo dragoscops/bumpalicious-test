@@ -71,7 +71,7 @@ jobs:
 
           git add -A
           git diff-index --quiet HEAD || git commit -m "chore: auto-update [skip ci]"
-          git push
+          git push origin ${{ github.ref_name }}
 
           tags=$(git tag -l 'v*')
           if [ -n "$tags" ]; then 
