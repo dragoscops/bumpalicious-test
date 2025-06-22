@@ -93,9 +93,9 @@ jobs:
       - name: Update Version
         uses: dragoscops/bumpalicious@prepare_release
         with:
+          github_token: ${{ steps.app-token-push.outputs.token || secrets.GH_TOKEN_PUSH }}
           pr: ${{ matrix.pr }}
           pr_auto_merge: true
-          token: ${{ steps.app-token-push.outputs.token || secrets.GH_TOKEN_PUSH }}
           workspaces: .:node
 
       - name: Validate Version Bump
