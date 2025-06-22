@@ -51,19 +51,34 @@ jobs:
           set -ex
 
           git pull origin ${{ github.ref_name }}
-
-          echo "This is a test project" > README.md
-          echo '{ "version": "0.0.1", "name": "single-project" }' > package.json
-          mkdir -p workspaces1
-          echo "This is a workspaces project 1" > workspaces1/README.md
-          echo '{ "version": "0.0.5", "name": "@main-workspace/workspace1" }' > workspaces1/package.json
-          mkdir -p workspaces2
-          echo "This is a workspaces project 2" > workspaces2/README.md
-          echo '{ "version": "0.0.31", "name": "@main-workspace/workspace2" }' > workspaces2/package.json
+          rm -rf workspaces* package.json README.md CHANGELOG.md
 
           git add -A
           git diff-index --quiet HEAD || git commit -m "chore: auto-update [skip ci]"
           git push
+
+          git pull origin ${{ github.ref_name }}
+          git tag -l | xargs git push --delete origin
+
+          git pull origin ${{ github.ref_name }}
+          git fetch
+          git branch -a | grep -v main | 
+          # Delete all local branches except main
+          git branch | grep -v 'main' | xargs -r git branch -D
+          # Delete all remote branches except main
+          git branch -r | grep -v 'origin/main' | sed 's/origin\///' | xargs -r -I {} git push origin --delete {}
+
+          mkdir -p workspaces1
+          echo "This is a workspaces project 1" > workspaces1/README.md
+          echo '{ "version": "0.0.5", "name": "@main-workspace/workspace1" }' > workspaces1/package.json
+
+          mkdir -p workspaces2
+          echo "This is a workspaces project 2" > workspaces2/README.md
+          echo '{ "version": "0.0.3", "name": "@main-workspace/workspace2" }' > workspaces2/package.json
+
+          git add -A
+          git diff-index --quiet HEAD || git commit -m "chore: auto-update [skip ci]"
+          git push origin ${{ github.ref_name }}
 
           git tag v0.0.1
           git push origin v0.0.1
@@ -108,25 +123,3 @@ jobs:
           git branch -a
 
           git tag -l | grep v0.0.2
-
-      - name: Clean Repo
-        if: ${{ always() }}
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-
-          set -ex
-
-          git pull origin ${{ github.ref_name }}
-          git tag -l
-
-          rm -rf workspaces* package.json README.md CHANGELOG.md
-
-          git add -A
-          git diff-index --quiet HEAD || git commit -m "chore: auto-update [skip ci]"
-
-          git push
-
-          git pull origin ${{ github.ref_name }}
-
-          git tag -l | xargs git push --delete origin
