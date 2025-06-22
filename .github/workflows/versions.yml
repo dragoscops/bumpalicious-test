@@ -3,8 +3,21 @@ name: Test Updating Version
 run-name: Test Updating Version ${{ inputs.workspace_distribution }}
 
 on:
-  workflow_dispatch: {}
-  workflow_call: {}
+  workflow_dispatch:
+    inputs:
+      version:
+        describtion: The bumpalicious version to run
+        type: choice
+        default: v2
+        options:
+          - v1
+          - v2
+  workflow_call:
+    inputs:
+      version:
+        description: The bumpalicious version to run
+        type: string
+        default: v2
 
 jobs:
   test:
@@ -115,8 +128,19 @@ jobs:
           git pull origin ${{ github.ref_name }} --ff-only
           git push origin ${{ github.ref_name }}
 
-      - name: Update Version
-        uses: dragoscops/bumpalicious@prepare_release
+      # TODO: hot implmenented properly, nor tested
+      - name: Update Version (V1)
+        uses: dragoscops/bumpalicious@v1
+        if: ${{ inputs.branch == 'v1' }}
+        with:
+          github_token: ${{ steps.app-token-push.outputs.token || secrets.GH_TOKEN_PUSH }}
+          pr: ${{ matrix.pr }}
+          pr_auto_merge: true
+          workspaces: ${{ matrix.workspaces }}
+
+      - name: Update Version (V2)
+        uses: dragoscops/bumpalicious@v2
+        if: ${{ inputs.branch == 'v2' }}
         with:
           github_token: ${{ steps.app-token-push.outputs.token || secrets.GH_TOKEN_PUSH }}
           pr: ${{ matrix.pr }}
