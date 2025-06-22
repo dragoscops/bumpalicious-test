@@ -58,15 +58,20 @@ jobs:
           git push
 
           git pull origin ${{ github.ref_name }}
-          git tag -l | xargs git push --delete origin
+          git tag -l | grep v && \
+            git tag -l | xargs git push --delete origin
 
           git pull origin ${{ github.ref_name }}
           git fetch
-          git branch -a | grep -v main | 
+
           # Delete all local branches except main
-          git branch | grep -v 'main' | xargs -r git branch -D
+          if git branch | grep -qv 'main$'; then
+            git branch | grep -v 'main$' | xargs -n 1 git branch -D
+          fi
           # Delete all remote branches except main
-          git branch -r | grep -v 'origin/main' | sed 's/origin\///' | xargs -r -I {} git push origin --delete {}
+          if git branch -r | grep -qv 'origin/main$'; then
+            git branch -r | grep -v 'origin/main$' | sed 's/origin\///' | xargs -n 1 git push origin --delete
+          fi
 
           mkdir -p workspaces1
           echo "This is a workspaces project 1" > workspaces1/README.md
