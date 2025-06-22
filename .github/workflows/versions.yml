@@ -91,13 +91,12 @@ jobs:
           git push
 
       - name: Update Version
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_BUMPALICIOUS_TOKEN }}
         uses: dragoscops/bumpalicious@prepare_release
         with:
-          workspaces: .:node
           pr: ${{ matrix.pr }}
           pr_auto_merge: true
+          token: ${{ steps.app-token-push.outputs.token || secrets.GH_TOKEN_PUSH }}
+          workspaces: .:node
 
       - name: Validate Version Bump
         run: |
