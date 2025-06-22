@@ -16,7 +16,7 @@ jobs:
           - true
         workspaces:
           - .:node
-          - .:node;workspaces1:node;workspaces2:node
+          - .:node,workspaces1:node,workspaces2:node
       max-parallel: 1
     steps:
       - name: Github App Token
