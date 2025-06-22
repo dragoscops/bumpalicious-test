@@ -51,6 +51,7 @@ jobs:
         shell: bash
         run: |
           REMOTE_REPO="https://x-access-token:${{ steps.app-token-push.outputs.token || secrets.GH_TOKEN_PUSH }}@github.com/${{ github.repository }}.git"
+          REMOTE_REPO="https://${{ steps.app-token-push.outputs.token || secrets.GH_TOKEN_PUSH }}@github.com/${{ github.repository }}.git"
           echo "Setting authenticated remote URL..."
           git remote set-url origin "$REMOTE_REPO"
 
