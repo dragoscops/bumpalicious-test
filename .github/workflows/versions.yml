@@ -46,12 +46,13 @@ jobs:
         with:
           fetch-depth: 0 # Required if you’ll push to an existing branch
 
-      # - name: Reconfigure Remote
-      #   shell: bash
-      #   run: |
-      #     REMOTE_REPO="https://x-access-token:${{ inputs.token }}@github.com/${{ github.repository }}.git"
-      #     echo "Setting authenticated remote URL..."
-      #     git remote set-url origin "$REMOTE_REPO"
+      - name: Reconfigure Remote
+        if: ${{ matrix.co_with_token == false }}
+        shell: bash
+        run: |
+          REMOTE_REPO="https://x-access-token:${{ steps.app-token-push.outputs.token || secrets.GH_TOKEN_PUSH }}@github.com/${{ github.repository }}.git"
+          echo "Setting authenticated remote URL..."
+          git remote set-url origin "$REMOTE_REPO"
 
       - name: Provision Code
         run: |
