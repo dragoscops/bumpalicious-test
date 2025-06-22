@@ -31,7 +31,6 @@ jobs:
       # - Administration: read
 
       - name: Checkout repo (using token)
-        if: ${{ matrix.co_with_token == true }}
         uses: actions/checkout@v4
         with:
           token: ${{ steps.app-token-push.outputs.token || secrets.GH_TOKEN_PUSH }}
