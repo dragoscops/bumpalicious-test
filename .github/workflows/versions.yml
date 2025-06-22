@@ -131,7 +131,7 @@ jobs:
       # TODO: hot implmenented properly, nor tested
       - name: Update Version (V1)
         uses: dragoscops/bumpalicious@v1
-        if: ${{ inputs.branch == 'v1' }}
+        if: ${{ inputs.version == 'v1' }}
         with:
           github_token: ${{ steps.app-token-push.outputs.token || secrets.GH_TOKEN_PUSH }}
           pr: ${{ matrix.pr }}
@@ -140,7 +140,7 @@ jobs:
 
       - name: Update Version (V2)
         uses: dragoscops/bumpalicious@v2
-        if: ${{ inputs.branch == 'v2' }}
+        if: ${{ inputs.version == 'v2' }}
         with:
           github_token: ${{ steps.app-token-push.outputs.token || secrets.GH_TOKEN_PUSH }}
           pr: ${{ matrix.pr }}
