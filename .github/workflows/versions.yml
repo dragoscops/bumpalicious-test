@@ -45,6 +45,10 @@ jobs:
           - .:node,workspaces1:node,workspaces2:node
       max-parallel: 1
     steps:
+      - name: Debug
+        run: |
+          echo ${{ inputs.app_id || vars.GH_APP_PUSH_ID }}
+
       - name: Github App Token
         id: app-token-push
         uses: actions/create-github-app-token@v2
