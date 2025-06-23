@@ -18,6 +18,11 @@ on:
         description: The bumpalicious version to run
         type: string
         default: v2
+      app_id:
+        description: Gh App Id when used as Reusable Workflow
+        type: string
+        required: false
+        default: ''
 
 jobs:
   test:
@@ -36,7 +41,7 @@ jobs:
         id: app-token-push
         uses: actions/create-github-app-token@v2
         with:
-          app-id: ${{ vars.GH_APP_PUSH_ID }}
+          app-id: ${{ inputs.app_id || vars.GH_APP_PUSH_ID }}
           private-key: ${{ secrets.GH_APP_PUSH_KEY }}
           owner: ${{ github.repository_owner }}
           repositories: bumpalicious,bumpalicious-test
