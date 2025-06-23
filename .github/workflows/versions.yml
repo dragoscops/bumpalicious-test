@@ -24,7 +24,8 @@ on:
         required: false
         default: ""
     secrets:
-      - GH_APP_PUSH_KEY
+      GH_APP_PUSH_KEY:
+        required: false
 
 jobs:
   test:
