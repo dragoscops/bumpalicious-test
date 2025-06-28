@@ -12,6 +12,7 @@ on:
         options:
           - v1
           - v2
+          - builder
   workflow_call:
     inputs:
       version:
@@ -143,6 +144,15 @@ jobs:
       - name: Update Version (V2)
         uses: dragoscops/bumpalicious@v2
         if: ${{ inputs.version == 'v2' }}
+        with:
+          github_token: ${{ steps.app-token-push.outputs.token || secrets.GH_TOKEN_PUSH }}
+          pr: ${{ matrix.pr }}
+          pr_auto_merge: true
+          workspaces: ${{ matrix.workspaces }}
+
+      - name: Update Version (Builder)
+        uses: dragoscops/bumpalicious@v2
+        if: ${{ inputs.version == 'builder' }}
         with:
           github_token: ${{ steps.app-token-push.outputs.token || secrets.GH_TOKEN_PUSH }}
           pr: ${{ matrix.pr }}
